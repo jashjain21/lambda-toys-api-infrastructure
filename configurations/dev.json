@@ -25,15 +25,15 @@
       },
       "containerRegistryUsername" :{
         "value": "lambdatoysdev"
-      },
-      "containerRegistryPassword": {
-        "reference": {
-            "keyVault": {
-                "id": "/subscriptions/469048f1-92af-4c71-a63b-330ec31d2b82/resourceGroups/samcogancore/providers/Microsoft.KeyVault/vaults/deploymentkvsc01"
-                    },
-                    "secretName": "lambdaAcrDev"
-                }
-         }
+      }
+      // "containerRegistryPassword": {
+      //   "reference": {
+      //       "keyVault": {
+      //           "id": "/subscriptions/469048f1-92af-4c71-a63b-330ec31d2b82/resourceGroups/samcogancore/providers/Microsoft.KeyVault/vaults/deploymentkvsc01"
+      //               },
+      //               "secretName": "lambdaAcrDev"
+      //           }
+      //    }
 
     }
 }

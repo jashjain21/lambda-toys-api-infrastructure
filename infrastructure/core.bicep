@@ -89,98 +89,98 @@ resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2021-03-15' = {
   }
 }
 
-resource sqlDb 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-06-15' = {
-  name: '${prefix}-sqldb'
-  parent: cosmosDbAccount
-  properties: {
-    resource: {
-      id: '${prefix}-sqldb'
-    }
-  }
-}
+// resource sqlDb 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-06-15' = {
+//   name: '${prefix}-sqldb'
+//   parent: cosmosDbAccount
+//   properties: {
+//     resource: {
+//       id: '${prefix}-sqldb'
+//     }
+//   }
+// }
 
-resource sqlContainerName 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2021-06-15' = {
-  parent: sqlDb 
-  name: '${prefix}-orders'
-  properties: {
-    resource: {
-      id: '${prefix}-orders'
-      partitionKey: {
-        paths: [
-          '/id'
-        ]
-      }
-    }
+// resource sqlContainerName 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2021-06-15' = {
+//   parent: sqlDb 
+//   name: '${prefix}-orders'
+//   properties: {
+//     resource: {
+//       id: '${prefix}-orders'
+//       partitionKey: {
+//         paths: [
+//           '/id'
+//         ]
+//       }
+//     }
 
-  }
-}
+//   }
+// }
 
-resource stateContainerName 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2021-06-15' = {
-  parent: sqlDb 
-  name: '${prefix}-state'
-  properties: {
-    resource: {
-      id: '${prefix}-state'
-      partitionKey: {
-        paths: [
-          '/partitionKey'
-        ]
-      }
-    }
+// resource stateContainerName 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2021-06-15' = {
+//   parent: sqlDb 
+//   name: '${prefix}-state'
+//   properties: {
+//     resource: {
+//       id: '${prefix}-state'
+//       partitionKey: {
+//         paths: [
+//           '/partitionKey'
+//         ]
+//       }
+//     }
     
-  }
-}
+//   }
+// }
 
-module cosmosPrivateLink 'br:bicepreg.azurecr.io/bicep/modules/privateendpoint:v1' ={
-  name: 'cosmosPrivateLink'
-  params:{
-    location:location
-    name: '${prefix}-cosmos'
-    virtualNetworkId: virtualNetwork.id
-    subnetId: virtualNetwork.properties.subnets[0].id
-    zoneName: 'privatelink.documents.azure.com'
-    subResourceTypes:[
-       'SQL'
-    ]
-    resourceId: cosmosDbAccount.id
-  }
-}
+// module cosmosPrivateLink 'br:bicepreg.azurecr.io/bicep/modules/privateendpoint:v1' ={
+//   name: 'cosmosPrivateLink'
+//   params:{
+//     location:location
+//     name: '${prefix}-cosmos'
+//     virtualNetworkId: virtualNetwork.id
+//     subnetId: virtualNetwork.properties.subnets[0].id
+//     zoneName: 'privatelink.documents.azure.com'
+//     subResourceTypes:[
+//        'SQL'
+//     ]
+//     resourceId: cosmosDbAccount.id
+//   }
+// }
 
-resource keyVault 'Microsoft.KeyVault/vaults@2021-10-01' = {
-  name: '${prefix}-kv'
-  location: location
-  properties: {
-    enabledForDeployment: true
-    enabledForTemplateDeployment: true
-    enabledForDiskEncryption: true
-    enableRbacAuthorization: true
-    tenantId: tenant().tenantId
-    sku: {
-      name: 'standard'
-      family: 'A'
-    }
-  }
-}
+// resource keyVault 'Microsoft.KeyVault/vaults@2021-10-01' = {
+//   name: '${prefix}-kv'
+//   location: location
+//   properties: {
+//     enabledForDeployment: true
+//     enabledForTemplateDeployment: true
+//     enabledForDiskEncryption: true
+//     enableRbacAuthorization: true
+//     tenantId: tenant().tenantId
+//     sku: {
+//       name: 'standard'
+//       family: 'A'
+//     }
+//   }
+// }
 
-module keyVaultPrivateLink 'br:bicepreg.azurecr.io/bicep/modules/privateendpoint:v1' ={
-  name: 'keyVaultPrivateLink'
-  params:{
-    location:location
-    name: '${prefix}-keyvault'
-    virtualNetworkId: virtualNetwork.id
-    subnetId: virtualNetwork.properties.subnets[0].id
-    zoneName: 'privatelink.vaultcore.azure.net'
-    subResourceTypes:[
-       'vault'
-    ]
-    resourceId: keyVault.id
-  }
-}
+// module keyVaultPrivateLink 'br:bicepreg.azurecr.io/bicep/modules/privateendpoint:v1' ={
+//   name: 'keyVaultPrivateLink'
+//   params:{
+//     location:location
+//     name: '${prefix}-keyvault'
+//     virtualNetworkId: virtualNetwork.id
+//     subnetId: virtualNetwork.properties.subnets[0].id
+//     zoneName: 'privatelink.vaultcore.azure.net'
+//     subResourceTypes:[
+//        'vault'
+//     ]
+//     resourceId: keyVault.id
+//   }
+// }
 
 output vNetId string = virtualNetwork.id
 output vNetName string = virtualNetwork.name
-output SecretKeyVaultName string = keyVault.name
+// output SecretKeyVaultName string = keyVault.name
 output CosmosAccountName string = cosmosDbAccount.name
-output ComosDbName string = sqlDb.name
-output CosmosStateContainerName string = stateContainerName.name
-output CosmosSqlContainerName string = sqlContainerName.name
+// output ComosDbName string = sqlDb.name
+// output CosmosStateContainerName string = stateContainerName.name
+// output CosmosSqlContainerName string = sqlContainerName.name
