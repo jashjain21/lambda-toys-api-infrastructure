@@ -15,13 +15,13 @@ Options available ->
 
 Screenshots:
 // Creation 
-![Alt text](./stack.png)
+![Alt text](./images/stack.png)
 
-![Alt text](./rg_details.png)
+![Alt text](./images/rg_details.png)
 
 // Deletion
 
-![Alt text](./deletion.png)
+![Alt text](./images/deletion.png)
 
 
 
